@@ -5,6 +5,8 @@ import SignIn from "../views/SignIn.vue";
 import SignUp from "../views/SignUp.vue";
 import UpdateUser from "../views/UpdateUser.vue";
 
+import Movies from "../views/Movies.vue";
+
 import { user } from "../store/user.js";
 
 const routes = [
@@ -27,6 +29,14 @@ const routes = [
     name: "UpdateUser",
     path: "/updateuser",
     component: UpdateUser,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    name: "Movies",
+    path: "/movies",
+    component: Movies,
     meta: {
       requiresAuth: true,
     },

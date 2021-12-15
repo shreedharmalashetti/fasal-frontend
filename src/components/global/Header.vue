@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-lg text-white text-2xl relative min-h-10 w-full">
+  <div class="shadow-lg text-white  relative min-h-10 w-full">
     <div
       class="
         absolute
@@ -9,7 +9,7 @@
         -translate-l-1/2 -translate-y-1/2
       "
     >
-      <div class="mx-2 space-x-2">
+      <div class="pl-2 flex justify-between">
         <slot name="left"></slot>
       </div>
     </div>
@@ -22,7 +22,7 @@
         -translate-x-1/2 -translate-y-1/2
       "
     >
-      <div class="mx-2 space-x-2">
+      <div class="flex justify-between">
         <slot name="center"></slot>
       </div>
     </div>
@@ -35,7 +35,7 @@
         -translate-r-1/2 -translate-y-1/2
       "
     >
-      <div class="mx-2 space-x-2">
+      <div class="flex justify-between">
         <slot name="right"></slot>
       </div>
     </div>

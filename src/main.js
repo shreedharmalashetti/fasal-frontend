@@ -3,9 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import "virtual:windi.css";
 
-import Modal from "./components/Modal.vue";
-import Sidebar from "./components/Sidebar.vue";
-import Header from "./components/Header.vue";
+import Modal from "./components/global/Modal.vue";
+import Sidebar from "./components/global/Sidebar.vue";
+import Header from "./components/global/Header.vue";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

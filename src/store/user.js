@@ -2,8 +2,8 @@ import { reactive } from "vue";
 
 class User {
   debug = false;
-  baseUrl = "http://localhost:8000/auth/";
-  // baseUrl = "https://socketiowhatsapp.herokuapp.com/auth/";
+  // baseUrl = "http://localhost:8000/auth/";
+  baseUrl = "https://fasal-backend.herokuapp.com/auth/";
 
   state = reactive({
     email: "",
