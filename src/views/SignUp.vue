@@ -1,11 +1,14 @@
 <template>
+  <div>
+    
+  
   <v-modal v-if="isLoading" class="z-50">
     <div class="h-25 w-50 flex justify-center items-center">
       <h1>{{ typeof isLoading == "string" ? isLoading : "loading..." }}</h1>
     </div>
   </v-modal>
 
-  <v-modal v-modal="$attrs" class="z-30" @click.self="$router.replace('/')">
+  <v-modal  class="z-30" @click.self="$router.replace('/')">
     <form
       @submit.prevent="signup()"
       class="w-xs shadow space-y-2 bg-indigo-300 rounded"
@@ -65,6 +68,9 @@
       </div>
     </form>
   </v-modal>
+  
+    
+  </div>
 </template>
 <script setup>
 import { reactive, ref } from "vue";
