@@ -81,11 +81,12 @@ const togglePasswordType = () => {
 };
 
 const goBack = () => {
-  if (route.params.nextUrl != null) {
-    router.replace(route.params.nextUrl);
-  } else {
-    router.replace("/");
-  }
+  // if (route.params.nextUrl != null) {
+  //   router.replace(route.params.nextUrl);
+  // } else {
+  //   router.replace("/");
+  // }
+  router.replace("/");
 };
 
 async function login() {
