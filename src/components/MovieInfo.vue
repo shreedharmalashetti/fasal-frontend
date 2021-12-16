@@ -16,7 +16,7 @@
     <div>rating: {{ currentMovie.rating }}</div>
     <div class="py-1">{{ currentMovie.plot }}</div>
     <div>director: {{ currentMovie.director }}</div>
-    <div>starts: {{ currentMovie.actors }}</div>
+    <div>stars: {{ currentMovie.actors }}</div>
 
     <div v-if="user.state.id == currentMovie.userId" class="text-center">
       <button @click="deleteMovie()" class="btn btn-red">delete</button>
