@@ -18,7 +18,7 @@
     <div>director: {{ currentMovie.director }}</div>
     <div>starts: {{ currentMovie.actors }}</div>
 
-    <div class="text-center">
+    <div v-if="user.state.id == currentMovie.userId" class="text-center">
       <button @click="deleteMovie()" class="btn btn-red">delete</button>
     </div>
   </div>
@@ -26,6 +26,7 @@
 <script setup>
 import { computed } from "vue";
 import { movies } from "../store/movies.js";
+import { user } from "../store/user.js";
 
 const props = defineProps({
   imdbid: String,

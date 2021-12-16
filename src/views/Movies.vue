@@ -4,7 +4,11 @@
       <div class="relative">
         <v-header class="bg-green-500">
           <template #left>
-            <fa-icon @click="$router.go(-1)" icon="arrow-left" class="icon text-2xl" />
+            <fa-icon
+              @click="$router.go(-1)"
+              icon="arrow-left"
+              class="icon text-2xl"
+            />
           </template>
           <template #center>
             <a
@@ -55,7 +59,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { movies } from "../store/movies";
 
 import MovieInfo from "../components/MovieInfo.vue";
@@ -67,5 +71,9 @@ const canAddMovie = ref(false);
 const currentMovies = computed(() => {
   if (accessType.value == "all") return movies.state.movies;
   return movies.state.movies.filter((m) => m.accessType == accessType.value);
+});
+
+onMounted(() => {
+  movies.getAllMovies();
 });
 </script>

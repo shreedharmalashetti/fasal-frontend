@@ -18,7 +18,6 @@ class Movies {
       //   plot: "An undercover cop goes into the big bad world (Ronapura), an place taken over by a don, where his safety may be compromised.",
       //   poster:
       //     "https://m.media-amazon.com/images/M/MV5BNjUzZGI0YWMtYWRjYy00MDE3LThjYjEtZDYzYTg4NzAxZjUxXkEyXkFqcGdeQXVyMzQzMDc2MDk@._V1_SX300.jpg",
-
       //   rating: 8,
       //   runtime: "152 min",
       //   title: "Mufti",
@@ -27,20 +26,25 @@ class Movies {
     ],
   });
 
-  constructor() {
+  constructor() {}
+
+  async getAllMovies() {
     fetch(this.baseUrl, {
       method: "get",
       headers: {
         Authorization: "Bearer " + user.state.token,
         "Content-Type": "application/json",
       },
-    }).then(async (response) => {
-      if (!response.ok) {
-        const error = await response.json();
-        console.log(error);
-      }
-      this.state.movies = await response.json();
-    });
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const error = await response.json();
+          console.log(error);
+          return;
+        }
+        this.state.movies = await response.json();
+      })
+      .catch(console.log);
   }
 
   async searchMovie(query) {
