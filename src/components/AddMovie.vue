@@ -25,6 +25,9 @@
         </div>
         <div class="text-center">
           <button @click="searchMovie()" class="btn btn-pink">search</button>
+          <div>
+            {{props.accessType}}
+          </div>
         </div>
       </div>
 
