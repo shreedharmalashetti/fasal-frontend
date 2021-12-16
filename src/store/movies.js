@@ -84,7 +84,7 @@ class Movies {
       throw new Error(error.message);
     }
     const movie = await response.json();
-    this.state.movies.push(movie);
+    this.state.movies.unshift(movie);
     return movie;
   }
 
