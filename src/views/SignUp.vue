@@ -1,4 +1,7 @@
 <template>
+  <div>
+    
+  
   <v-modal v-if="isLoading" class="z-50">
     <div class="h-25 w-50 flex justify-center items-center">
       <h1>{{ typeof isLoading == "string" ? isLoading : "loading..." }}</h1>
@@ -65,6 +68,9 @@
       </div>
     </form>
   </v-modal>
+  
+    
+  </div>
 </template>
 <script setup>
 import { reactive, ref } from "vue";
