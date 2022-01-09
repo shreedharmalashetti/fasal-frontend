@@ -133,8 +133,9 @@ class Movies {
       return false;
     }
 
-    const { id } = await response.json();
+    const { id, userId } = await response.json();
     movie.id = id;
+    movie.userId = userId;
 
     this.state.movies.push(movie);
     log("movie added");

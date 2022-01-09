@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="currentMovie"
-    class="container mx-auto bg-blue-300 flex space-x-2 items-center"
+    class="container max-w-md mx-auto bg-blue-300 flex space-x-2 items-center"
   >
     <div class="">
       <img
