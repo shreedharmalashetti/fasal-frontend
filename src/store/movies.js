@@ -62,12 +62,8 @@ class Movies {
       return false;
     }
     const movie = await response.json();
-<<<<<<< HEAD
     this.state.movies.push(movie);
     log(false);
-=======
-    this.state.movies.unshift(movie);
->>>>>>> 807f71658c4feb8e6696eb09d7abbbf1bdbc185d
     return movie;
   }
 
