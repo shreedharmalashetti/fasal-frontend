@@ -6,6 +6,7 @@ import SignUp from "../views/SignUp.vue";
 import UpdateUser from "../views/UpdateUser.vue";
 
 import Movies from "../views/Movies.vue";
+import Movie from "../views/Movie.vue";
 
 import { user } from "../store/user.js";
 
@@ -37,6 +38,14 @@ const routes = [
     name: "Movies",
     path: "/movies",
     component: Movies,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    name: "Movie",
+    path: "/movie/:id",
+    component: Movie,
     meta: {
       requiresAuth: true,
     },

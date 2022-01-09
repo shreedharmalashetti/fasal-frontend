@@ -2,8 +2,7 @@ import { reactive } from "vue";
 
 class User {
   debug = false;
-  // baseUrl = "http://localhost:8000/auth/";
-  baseUrl = "https://fasal-backend.herokuapp.com/auth/";
+  baseUrl = import.meta.env.VITE_BACKEND_URL + "auth/";
 
   state = reactive({
     email: "",

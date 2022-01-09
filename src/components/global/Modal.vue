@@ -8,6 +8,7 @@
       flex
       justify-center
       items-center
+      overflow-y-auto
     "
   >
     <slot></slot>

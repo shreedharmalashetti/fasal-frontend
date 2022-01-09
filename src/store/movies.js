@@ -2,52 +2,148 @@ import { reactive } from "vue";
 import { user } from "./user.js";
 
 class Movies {
-  // baseUrl = "http://localhost:8000/movies/";
-  baseUrl = "https://fasal-backend.herokuapp.com/movies/";
+  baseUrl = import.meta.env.VITE_BACKEND_URL + "movies/";
 
   state = reactive({
     movies: [
       // {
-      //   accessType: "private",
-      //   actors: "Shivarajkumar, Prakash Belawadi, Shanvi Srivastava",
-      //   country: "India",
-      //   director: "Narthan",
-      //   genres: "Action, Drama, Thriller",
-      //   imdbid: "tt6405208",
-      //   languages: "Kannada",
-      //   plot: "An undercover cop goes into the big bad world (Ronapura), an place taken over by a don, where his safety may be compromised.",
-      //   poster:
-      //     "https://m.media-amazon.com/images/M/MV5BNjUzZGI0YWMtYWRjYy00MDE3LThjYjEtZDYzYTg4NzAxZjUxXkEyXkFqcGdeQXVyMzQzMDc2MDk@._V1_SX300.jpg",
-      //   rating: 8,
-      //   runtime: "152 min",
-      //   title: "Mufti",
-      //   year: 2017,
+      //   id: String,
+      //   userId: String,
+      //   accessType: String,
+      //   title: String,
+      //   year: Number,
+      //   languages: String,
+      //   poster: String,
+      //   video: String,
       // },
     ],
   });
 
   constructor() {}
 
-  async getAllMovies() {
-    fetch(this.baseUrl, {
+  async getAllMovies(log = console.log) {
+    if (this.state.movies.length > 0) return;
+    log("getting all movies...");
+    const response = await fetch(this.baseUrl, {
       method: "get",
       headers: {
         Authorization: "Bearer " + user.state.token,
         "Content-Type": "application/json",
       },
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          const error = await response.json();
-          console.log(error);
-          return;
-        }
-        this.state.movies = await response.json();
-      })
-      .catch(console.log);
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      log("get all movies error " + error.message);
+      return false;
+    }
+
+    this.state.movies = await response.json();
+    log(false);
+    return true;
   }
 
-  async searchMovie(query) {
+  async getMovie(id, log = console.log) {
+    const index = this.state.movies.findIndex((m) => m.id == id);
+    if (index >= 0) return this.state.movies[index];
+
+    log("getting movie...");
+    const response = await fetch(this.baseUrl + id, {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + user.state.token,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      log("get movie error " + error.message);
+      return false;
+    }
+    const movie = await response.json();
+    this.state.movies.push(movie);
+    log(false);
+    return movie;
+  }
+
+  async deleteMovie(id, log = console.log) {
+    const index = this.state.movies.findIndex((m) => m.id == id);
+    if (index < 0) return log("movie not found to delete");
+
+    log("deleting movie...");
+    this.state.movies.splice(index, 1);
+
+    const response = await fetch(this.baseUrl + id, {
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + user.state.token,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      log("delete movie error " + error.message);
+      return false;
+    }
+    log("movie deleted");
+    return true;
+  }
+
+  async updateMovie(movie, log = console.log) {
+    const index = this.state.movies.findIndex((m) => m.id == movie.id);
+    if (index < 0) return log("movie not found to update");
+
+    log("updating movie...");
+
+    const response = await fetch(this.baseUrl + movie.id, {
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + user.state.token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(movie),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      log("update movie error " + error.message);
+      return false;
+    }
+    this.state.movies[index] = movie;
+    log("movie updated");
+    return true;
+  }
+
+  async addMovie(movie, log = console.log) {
+    log("uploading movie...");
+    const response = await fetch(this.baseUrl, {
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + user.state.token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...movie }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      log("add movie error " + error.message);
+      return false;
+    }
+
+    const { id } = await response.json();
+    movie.id = id;
+
+    this.state.movies.push(movie);
+    log("movie added");
+    return true;
+  }
+
+  async imdbSearch(query, log = console.log) {
+    log("searching movie...");
+
     const response = await fetch(
       this.baseUrl + "search?" + new URLSearchParams(query),
       {
@@ -61,51 +157,13 @@ class Movies {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.message);
+      log("search movie error " + error.message);
+      return false;
     }
-    const movie = await response.json();
-    return movie;
-  }
 
-  async addMovie(id, type) {
-    const response = await fetch(
-      this.baseUrl + "add?id=" + id + "&accessType=" + type,
-      {
-        method: "get",
-        headers: {
-          Authorization: "Bearer " + user.state.token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-    const movie = await response.json();
-    this.state.movies.push(movie);
-    return movie;
-  }
-
-  async deleteMovie(id) {
-    const index = this.state.movies.findIndex((m) => m.imdbid == id);
-
-    if (index < 0) throw new Error("movie not found");
-    this.state.movies.splice(index, 1);
-
-    const response = await fetch(this.baseUrl + id, {
-      method: "delete",
-      headers: {
-        Authorization: "Bearer " + user.state.token,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
+    const movies = await response.json();
+    log(false);
+    return movies;
   }
 }
 
